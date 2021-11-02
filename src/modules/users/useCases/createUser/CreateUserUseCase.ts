@@ -11,6 +11,11 @@ class CreateUserUseCase {
 
   execute({ email, name }: IRequest): User {
     // Complete aqui
+    const emailAlreadyTaken = this.usersRepository.findByEmail(email);
+
+    if (emailAlreadyTaken) throw new Error(`Email "${email}" already taken`);
+
+    return this.usersRepository.create({ email, name });
   }
 }
 
